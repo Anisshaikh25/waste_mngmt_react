@@ -13,15 +13,18 @@ app.use(cors())                    // allow React frontend to call this server
 app.use(express.json())            // parse incoming JSON request bodies
 
 // ─── Routes (we'll uncomment these as we build them) ─────────────────────────
-// app.use('/api/auth',       require('./routes/auth'))
-// app.use('/api/complaints', require('./routes/complaints'))
-// app.use('/api/admin',      require('./routes/admin'))
+app.use('/api/auth',       require('./routes/auth'))
+app.use('/api/complaints', require('./routes/complaints'))
+app.use('/api/admin',      require('./routes/admin'))
 
 // ─── Test route ───────────────────────────────────────────────────────────────
 app.get('/', (req, res) => {
   res.json({ message: 'SwachhAlert server is running 🚀' })
 })
 
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION:', err)
+})
 // ─── Connect to MongoDB then start server ─────────────────────────────────────
 mongoose
   .connect(process.env.MONGO_URI, {
